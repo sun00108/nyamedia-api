@@ -25,7 +25,7 @@ class SeriesController < ApplicationController
   # GET /api/v1/series/:id
   def info
     @series = Series.find(params[:id])
-    @episodes = Video.where(series_id: params[:id])
+    @episodes = Video.where(series_id: params[:id]).sort_by(&:episode)
     @relationships = Relationship.where(series_id: params[:id]).as_json
     @relationships.each do | relationship |
       relationship['staff_name'] = Staff.find(relationship['staff_id']).name
