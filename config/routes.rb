@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/api/v1/series', to: 'series#index'
   get '/api/v1/series/latest', to: 'series#fetch_latest_update'
   get '/api/v1/series/:id', to: 'series#info'
+  get '/api/v1/series/:id/name', to: 'series#fetch_name'
   post '/api/v1/series/add', to: 'series#add'
   post '/api/v1/series/:id/edit', to: 'series#edit'
   post '/api/v1/series/:id/delete', to: 'series#delete'
@@ -15,5 +16,14 @@ Rails.application.routes.draw do
   get '/api/v1/videos/:id', to: 'videos#info'
   get '/api/v1/videos/series/:series_id', to: 'videos#fetch_by_series'
   post '/api/v1/videos/add', to: 'videos#add'
+
+  post '/api/v1/wishes/add', to: 'wishes#add'
+
+  get '/api/v1/staffs', to: 'staffs#index'
+  get '/api/v1/staffs/:id/name', to: 'staffs#fetch_name'
+  post '/api/v1/staffs/add', to: 'staffs#add'
+
+  get '/api/v1/relationships', to: 'relationships#fetch_by_info'
+  post '/api/v1/relationships/add', to: 'relationships#add'
 
 end

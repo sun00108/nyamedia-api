@@ -26,6 +26,10 @@ class SeriesController < ApplicationController
   def info
     @series = Series.find(params[:id])
     @episodes = Video.where(series_id: params[:id])
+    @relationships = Relationship.where(series_id: params[:id]).as_json
+    @relationships.each do | relationship |
+      relationship['staff_name'] = Staff.find(relationship['staff_id']).name
+    end
     @images = {}
     # 1: poster, 2: backdrop, 3: logo
     if @series.poster_id.present?
@@ -58,7 +62,13 @@ class SeriesController < ApplicationController
         @images['logo'] = nil
       end
     end
-    render json: { status: 200, series: @series, episodes: @episodes, images: @images }
+    render json: { status: 200, series: @series, relationships: @relationships, episodes: @episodes, images: @images }
+  end
+
+  # GET /api/v1/series/:id/name
+  def fetch_name
+    @series = Series.find(params[:id])
+    render json: { status: 200, name: @series.name }
   end
 
   def series_params

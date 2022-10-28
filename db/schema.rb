@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_15_020739) do
+ActiveRecord::Schema.define(version: 2022_10_27_205844) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 2022_10_15_020739) do
     t.integer "series_id"
     t.integer "category"
     t.string "image_hash"
+  end
+
+  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "staff_id"
+    t.integer "series_id"
+    t.integer "role"
   end
 
   create_table "series", charset: "utf8mb4", force: :cascade do |t|
@@ -33,6 +41,14 @@ ActiveRecord::Schema.define(version: 2022_10_15_020739) do
     t.integer "backdrop_id"
     t.integer "logo_id"
     t.integer "bgm_id"
+    t.integer "year"
+  end
+
+  create_table "staffs", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "name_cn"
   end
 
   create_table "videos", charset: "utf8mb4", force: :cascade do |t|
@@ -42,6 +58,13 @@ ActiveRecord::Schema.define(version: 2022_10_15_020739) do
     t.integer "episode"
     t.integer "series_id"
     t.string "video_hash"
+  end
+
+  create_table "wishes", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "bgm_id"
+    t.string "bgm_user"
   end
 
 end
