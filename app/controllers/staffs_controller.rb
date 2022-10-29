@@ -13,7 +13,7 @@ class StaffsController < ApplicationController
   # GET /api/v1/staffs/:id
   def info
     @staff = Staff.find(params[:id])
-    render json: { status: 200, name: @staff }
+    render json: { status: 200, staff: @staff }
   end
 
   # POST /api/v1/staffs/add
