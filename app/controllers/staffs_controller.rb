@@ -10,10 +10,10 @@ class StaffsController < ApplicationController
     render json: { status: 200, staffs: @staffs }
   end
 
-  # GET /api/v1/staffs/:id/name
-  def fetch_name
+  # GET /api/v1/staffs/:id
+  def info
     @staff = Staff.find(params[:id])
-    render json: { status: 200, name: @staff.name }
+    render json: { status: 200, name: @staff }
   end
 
   # POST /api/v1/staffs/add

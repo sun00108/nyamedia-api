@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   post '/api/v1/wishes/add', to: 'wishes#add'
 
   get '/api/v1/staffs', to: 'staffs#index'
-  get '/api/v1/staffs/:id/name', to: 'staffs#fetch_name'
+  get '/api/v1/staffs/:id', to: 'staffs#info'
   post '/api/v1/staffs/add', to: 'staffs#add'
 
   get '/api/v1/relationships', to: 'relationships#fetch_by_info'
