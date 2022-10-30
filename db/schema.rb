@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_29_232626) do
+ActiveRecord::Schema.define(version: 2022_10_30_081552) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2022_10_29_232626) do
     t.integer "logo_id"
     t.integer "bgm_id"
     t.integer "year"
+    t.integer "nsfw"
   end
 
   create_table "staffs", charset: "utf8mb4", force: :cascade do |t|
