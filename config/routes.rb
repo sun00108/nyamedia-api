@@ -26,4 +26,10 @@ Rails.application.routes.draw do
   get '/api/v1/relationships', to: 'relationships#fetch_by_info'
   post '/api/v1/relationships/add', to: 'relationships#add'
 
+  get '/api/v1/onairseries', to: 'onairseries#index'
+  get '/api/v1/onairseries/today', to: 'onairseries#today'
+  get '/api/v1/onairseries/:id', to: 'onairseries#info'
+  post '/api/v1/onairseries/add', to: 'onairseries#add'
+  post '/api/v1/onairseries/:id/edit', to: 'onairseries#edit'
+
 end
