@@ -20,7 +20,7 @@ class SeriesController < ApplicationController
   def index
     @series = Series.where(nsfw: 0).sort_by(&:name_cn).as_json
     @series.each do | series |
-      series['poster'] = Image.find(series['poster_id']).image_hash
+      series['poster'] = Image.find(series['poster_id']).present? ? Image.find(series['poster_id']).image_hash : nil
     end
     render json: { status: 200, series: @series }
   end
@@ -173,13 +173,12 @@ class SeriesController < ApplicationController
 
   # GET /api/v1/series/latest
   def fetch_latest_update
-    @series = Series.where(nsfw: 0).order(updated_at: :desc).limit(6)
-    @posters = {}
+    @series = Series.where(nsfw: 0).order(updated_at: :desc).limit(6).as_json
     @series.each do | series |
       image = Image.find_by(id: series.poster_id)
-      @posters[series.id] = image.image_hash
+      series['poster'] = image.present? ? image.image_hash : nil
     end
-    render json: { status: 200, series: @series, posters: @posters }
+    render json: { status: 200, series: @series }
   end
 
 end
