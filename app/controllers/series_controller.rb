@@ -75,7 +75,7 @@ class SeriesController < ApplicationController
   end
 
   def series_params
-    params.require(:series).permit(:name, :name_cn, :description, :tmdb_id, :bgm_id, :season, :status, :poster_id, :backdrop_id, :logo_id)
+    params.require(:series).permit(:name, :name_cn, :description, :tmdb_id, :bgm_id, :year, :season, :status, :poster_id, :backdrop_id, :logo_id, :nsfw)
   end
 
   # POST /api/v1/series/add
