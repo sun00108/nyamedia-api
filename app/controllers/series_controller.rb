@@ -175,7 +175,7 @@ class SeriesController < ApplicationController
   def fetch_latest_update
     @series = Series.where(nsfw: 0).order(updated_at: :desc).limit(6).as_json
     @series.each do | series |
-      image = Image.find_by(id: series.poster_id)
+      image = Image.find_by(id: series['poster_id'])
       series['poster'] = image.present? ? image.image_hash : nil
     end
     render json: { status: 200, series: @series }
