@@ -137,7 +137,7 @@ class SeriesController < ApplicationController
     header = { 'User-Agent': 'sun00108/nyamedia-nfo-sync' }
     response = http.get(url, header)
     if response.code == '200'
-      if response.body.code == '404'
+      if JSON.parse(response.body)['code'].present?
         header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36', 'cookie': ENV['BGM_TV_COOKIE'] }
         response = http.get(url, header)
       end
