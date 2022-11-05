@@ -20,7 +20,8 @@ class SeriesController < ApplicationController
   def index
     @series = Series.where(nsfw: 0).sort_by(&:name_cn).as_json
     @series.each do | series |
-      series['poster'] = Image.find(series['poster_id']).present? ? Image.find(series['poster_id']).image_hash : nil
+      image = Image.find_by(id: series['poster_id'])
+      series['poster'] = image.present? ? image.image_hash : nil
     end
     render json: { status: 200, series: @series }
   end
@@ -28,7 +29,13 @@ class SeriesController < ApplicationController
   # GET /api/v1/series/:id
   def info
     @series = Series.find(params[:id])
-    @episodes = Video.where(series_id: params[:id]).sort_by(&:episode)
+    @episodes = Video.where(series_id: params[:id]).sort_by(&:episode).as_json
+    @episodes.each do | episode |
+      if episode['subtitle'].present?
+        subtitle = Subtitle.select(:zh_CN_hash, :zh_TW_hash).find(episode['subtitle']).as_json
+        episode['subtitle'] = subtitle
+      end
+    end
     @relationships = Relationship.where(series_id: params[:id]).as_json
     @relationships.each do | relationship |
       relationship['staff_name'] = Staff.find(relationship['staff_id']).name

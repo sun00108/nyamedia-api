@@ -32,4 +32,6 @@ Rails.application.routes.draw do
   post '/api/v1/onairseries/add', to: 'onairseries#add'
   post '/api/v1/onairseries/:id/edit', to: 'onairseries#edit'
 
+  post '/api/v1/subtitles/add', to: 'subtitles#add'
+
 end
