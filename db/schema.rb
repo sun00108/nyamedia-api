@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_05_201754) do
+ActiveRecord::Schema.define(version: 2022_11_10_084431) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -66,6 +66,21 @@ ActiveRecord::Schema.define(version: 2022_11_05_201754) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "zh_CN_hash"
     t.string "zh_TW_hash"
+  end
+
+  create_table "taggings", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "tag_id"
+    t.integer "series_id"
+    t.integer "weight"
+  end
+
+  create_table "tags", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.boolean "hidden", default: false
   end
 
   create_table "videos", charset: "utf8mb4", force: :cascade do |t|

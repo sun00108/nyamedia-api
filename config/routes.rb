@@ -34,4 +34,10 @@ Rails.application.routes.draw do
 
   post '/api/v1/subtitles/add', to: 'subtitles#add'
 
+  get '/api/v1/tags', to: 'tags#index'
+  post '/api/v1/tags/add', to: 'tags#add'
+
+  get '/api/v1/taggings/:series_id', to: 'taggings#fetch_by_series'
+  post '/api/v1/taggings/update', to: 'taggings#update'
+
 end
