@@ -41,4 +41,8 @@ Rails.application.routes.draw do
   get '/api/v1/taggings/:series_id', to: 'taggings#fetch_by_series'
   post '/api/v1/taggings/update', to: 'taggings#update'
 
+  get '/api/v1/streams/', to: 'streams#index'
+  get '/api/v1/streams/:id', to: 'streams#info'
+  post '/api/v1/streams/add', to: 'streams#add'
+
 end

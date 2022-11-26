@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_10_084431) do
+ActiveRecord::Schema.define(version: 2022_11_23_160554) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(version: 2022_11_10_084431) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
     t.string "name_cn"
+  end
+
+  create_table "streams", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "link"
   end
 
   create_table "subtitles", charset: "utf8mb4", force: :cascade do |t|
