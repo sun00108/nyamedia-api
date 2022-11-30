@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   get '/api/v1/streams/:id', to: 'streams#info'
   post '/api/v1/streams/add', to: 'streams#add'
 
+  get '/api/v1/movies', to: 'movies#index'
+  get '/api/v1/movies/:id', to: 'movies#info'
   post '/api/v1/movies/add', to: 'movies#add'
 
 end
