@@ -22,7 +22,10 @@ class MoviesController < ApplicationController
 
   # GET /api/v1/movies
   def index
-    @movies = Movie.all
+    @movies = Movie.all.as_json
+    @movies.each do | movie |
+      movie['poster'] = Image.find(movie['poster_id']).image_hash
+    end
     render json: { movies: @movies }
   end
 
