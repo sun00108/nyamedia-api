@@ -24,7 +24,8 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all.as_json
     @movies.each do | movie |
-      movie['poster'] = Image.find(movie['poster_id']).image_hash
+      image = Image.find_by(id: movie['poster_id'])
+      movie['poster'] = image.present? ? image.image_hash : nil
     end
     render json: { movies: @movies }
   end
