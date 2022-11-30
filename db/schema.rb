@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_23_160554) do
+ActiveRecord::Schema.define(version: 2022_11_29_223800) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -18,6 +18,20 @@ ActiveRecord::Schema.define(version: 2022_11_23_160554) do
     t.integer "series_id"
     t.integer "category"
     t.string "image_hash"
+    t.integer "movie_id"
+  end
+
+  create_table "movies", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "name_cn"
+    t.text "description"
+    t.integer "tmdb_id"
+    t.integer "bgm_id"
+    t.integer "poster_id"
+    t.integer "backdrop_id"
+    t.integer "logo_id"
   end
 
   create_table "onairseries", charset: "utf8mb4", force: :cascade do |t|
@@ -98,6 +112,7 @@ ActiveRecord::Schema.define(version: 2022_11_23_160554) do
     t.integer "series_id"
     t.string "video_hash"
     t.integer "subtitle"
+    t.integer "movie_id"
   end
 
   create_table "wishes", charset: "utf8mb4", force: :cascade do |t|
