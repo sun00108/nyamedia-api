@@ -75,12 +75,6 @@ class SeriesController < ApplicationController
     render json: { status: 200, series: @series, relationships: @relationships, episodes: @episodes, images: @images }
   end
 
-  # GET /api/v1/series/:id/name
-  def fetch_name
-    @series = Series.find(params[:id])
-    render json: { status: 200, name: @series.name }
-  end
-
   def series_params
     params.require(:series).permit(:name, :name_cn, :description, :tmdb_id, :bgm_id, :year, :season, :status, :poster_id, :backdrop_id, :logo_id, :nsfw)
   end
@@ -161,6 +155,47 @@ class SeriesController < ApplicationController
     end
   end
 
+  # POST /api/v1/series/:id/sync/tagging
+  def sync_tagging
+    series = Series.find_by(id: params[:id])
+    url = URI('https://api.bgm.tv/v0/subjects/' + series.bgm_id.to_s)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    header = { 'User-Agent': 'sun00108/nyamedia-nfo-sync' }
+    response = http.get(url, header)
+    if response.code == '200'
+      if JSON.parse(response.body)['code'].present? # Handle NSFW subjects (with login cookie)
+        header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36', 'cookie': ENV['BGM_TV_COOKIE'] }
+        response = http.get(url, header)
+      end
+      tags = JSON.parse(response.body)['tags'][0..7] # Hardcoded to 8 tags
+      # 获取 bgm.tv 此条目的前 8 个标签
+      # 拉取数据库中此条目的所有标签关系
+      taggings_local = Tagging.where(series_id: series.id)
+      taggings_local_copy = taggings_local.map(&:dup)
+      tags.each_with_index do | tag, index |
+        # 检查 bgm.tv 的标签是否存在于 标签表 中 / 是否已经被关联
+        tag_local = Tag.find_by(name: tag['name'])
+        if tag_local.nil? # 此时一定不存在 tagging 关系
+          tag_local = Tag.create(name: tag['name'], hidden: 0)
+          Tagging.create(tag_id: tag_local.id, series_id: series.id, weight: 8 - index) # Hardcoded to 8 tags
+        else
+          if !taggings_local_copy.map(&:tag_id).include?(tag_local.id)
+            Tagging.create(tag_id: tag_local.id, series_id: series.id, weight: 8 - index) # Hardcoded to 8 tags
+          else # 更新权重
+            Tagging.find_by(tag_id: tag_local.id, series_id: series.id).update(weight: 8 - index) # Hardcoded to 8 tags
+            # remove from taggings_local_copy
+            taggings_local_copy.delete_if { |tagging| tagging.tag_id == tag_local.id }
+          end
+        end
+      end
+      taggings_local_copy.each do | tagging_local |
+        Tagging.where(tag_id: tagging_local.tag_id, series_id: tagging_local.series_id).delete_all
+      end
+    end
+  end
+
   # POST /api/v1/series/:id/edit
   def edit
     @series = Series.find(params[:id])
@@ -186,6 +221,12 @@ class SeriesController < ApplicationController
       series['poster'] = image.present? ? image.image_hash : nil
     end
     render json: { status: 200, series: @series }
+  end
+
+  # GET /api/v1/series/:id/name (only for nyavideo project)
+  def fetch_name
+    @series = Series.find(params[:id])
+    render json: { status: 200, name: @series.name }
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_29_223800) do
+ActiveRecord::Schema.define(version: 2022_12_02_023618) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2022_11_29_223800) do
     t.integer "tag_id"
     t.integer "series_id"
     t.integer "weight"
+    t.integer "movie_id"
   end
 
   create_table "tags", charset: "utf8mb4", force: :cascade do |t|

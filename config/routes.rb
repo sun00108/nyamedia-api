@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/api/v1/series/add', to: 'series#add'
   post '/api/v1/series/:id/edit', to: 'series#edit'
   post '/api/v1/series/:id/delete', to: 'series#delete'
+  post '/api/v1/series/:id/sync/tagging', to: 'series#sync_tagging'
 
   post '/dev/api/v1/series/sync/tmdb', to: 'series#sync_nfo_tmdb'
   post '/dev/api/v1/series/sync/bgm', to: 'series#sync_nfo_bgm'
