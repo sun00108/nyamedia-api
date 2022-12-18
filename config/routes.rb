@@ -50,4 +50,9 @@ Rails.application.routes.draw do
   get '/api/v1/movies/:id', to: 'movies#info'
   post '/api/v1/movies/add', to: 'movies#add'
 
+  get '/api/v1/subscriptions', to: 'subscriptions#index'
+  get '/api/v1/subscriptions/active', to: 'subscriptions#index_active'
+  post '/api/v1/subscriptions/add', to: 'subscriptions#add'
+  post '/api/v1/subscriptions/:id/deactivate', to: 'subscriptions#deactivate'
+
 end

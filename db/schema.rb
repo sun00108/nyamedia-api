@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_02_023618) do
+ActiveRecord::Schema.define(version: 2022_12_18_151415) do
 
   create_table "images", charset: "utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -80,6 +80,14 @@ ActiveRecord::Schema.define(version: 2022_12_02_023618) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
     t.string "link"
+  end
+
+  create_table "subscriptions", charset: "utf8mb4", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "series_id"
+    t.string "rss_link"
+    t.boolean "active"
   end
 
   create_table "subtitles", charset: "utf8mb4", force: :cascade do |t|
